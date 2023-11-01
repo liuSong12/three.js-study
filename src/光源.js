@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
+
 
 
 const renderer = new THREE.WebGLRenderer()
@@ -59,6 +61,15 @@ directionalLight.position.set(10,10,10)
 directionalLight.shadow.radius = 50
 // 设置清晰度，避免模糊度太模糊
 directionalLight.shadow.mapSize.set(4096,4096)
+// 设置平行光投射相机属性
+directionalLight.shadow.camera.near = 0.5
+directionalLight.shadow.camera.far = 500
+directionalLight.shadow.camera.top = 5
+directionalLight.shadow.camera.bottom = -5
+directionalLight.shadow.camera.left = -5
+directionalLight.shadow.camera.right = 5
+
+
 //2.反射需要
 directionalLight.castShadow = true
 scene.add(directionalLight)
@@ -80,3 +91,10 @@ window.onresize = () => {
     camera.aspect = window.innerWidth/ window.innerHeight
     camera.updateProjectionMatrix()
 }
+
+const gui = new GUI()
+
+gui.add(directionalLight.shadow.camera,"near").min(0).max(20).step(0.1).onChange((e)=>{
+    console.log(e)
+    directionalLight.shadow.camera.updateProjectionMatrix()
+})
