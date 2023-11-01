@@ -55,6 +55,10 @@ scene.add(light)
 // 直射光
 const directionalLight = new THREE.DirectionalLight(0xffffff,2)
 directionalLight.position.set(10,10,10)
+// 设置阴影模糊度
+directionalLight.shadow.radius = 50
+// 设置清晰度，避免模糊度太模糊
+directionalLight.shadow.mapSize.set(4096,4096)
 //2.反射需要
 directionalLight.castShadow = true
 scene.add(directionalLight)
